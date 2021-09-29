@@ -1,32 +1,33 @@
-import { Client, ClientOptions } from 'discord.js'
+import { Client, ClientOptions, Collection } from 'discord.js'
 import { readdirSync } from 'fs'
 import { join } from 'path'
 
 import Config from '../config.json'
 import Command from './structures/Command'
 import Event from './structures/Event'
-import Logger from './structures/Logger'
+import Utils from './structures/Utils'
 
 export default class Under extends Client {
-  commands: Array<Command>
-  events: Array<Event>
+  commands: Collection<string, Command>
+  events: Collection<string, Event>
   config: typeof Config
-  utils: Logger
+  utils: Utils
 
   constructor(options: ClientOptions) {
     super(options)
 
-    this.commands = []
-    this.events = []
+    this.commands = new Collection()
+    this.events = new Collection()
     this.config = Config
-    this.utils = new Logger()
+    this.utils = new Utils()
 
     this.loadCommands()
     this.loadEvents()
   }
 
   registryCommands() {
-    this.guilds.cache.get('840070720275873812')?.commands.set(this.commands)
+    const guildCommands = toApplicationCommand(this.commands)
+    this.guilds.cache.get('840070720275873812')?.commands.set(guildCommands)
   }
 
   loadCommands(path: string = 'dist/src/commands') {
@@ -39,7 +40,7 @@ export default class Under extends Client {
         const commandClass = require(join(process.cwd(), `${path}/${category}/${command}`)).default
         const handler = new commandClass(this)
 
-        this.commands.push(handler)
+        this.commands.set(handler.name, handler)
       }
     }
   }
@@ -51,7 +52,7 @@ export default class Under extends Client {
       const eventClass = require(join(process.cwd(), `${path}/${event}`)).default
       const handler = new eventClass(this)
 
-      this.events.push(handler)
+      this.events.set(handler.name, handler)
       this.on(handler.name, handler.run)
     }
   }
@@ -60,4 +61,8 @@ export default class Under extends Client {
     super.login(this.config.token || token)
     return this
   }
+}
+
+function toApplicationCommand(collection: Collection<string, Command>) {
+  return collection.map(s => { return { name: s.name, description: s.description, options: s.options, defaultPermission: s.devOnly ? false : s.defaultPermission } });
 }

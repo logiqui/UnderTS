@@ -14,7 +14,8 @@
   "dependencies": {
     "box-console": "^2.0.0",
     "chalk": "^4.1.2",
-    "discord.js": "^13.1.0"
+    "discord.js": "^13.1.0",
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.13",

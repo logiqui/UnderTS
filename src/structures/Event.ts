@@ -13,6 +13,6 @@ export default class Event {
   constructor(client: Under, options: EventOptions) {
     this.client = client
     this.name = options.name
-    this.run = (client: Under, ...args: any[]) => { }
+    this.run = async (client: Under, ...args: any[]) => { }
   }
 }

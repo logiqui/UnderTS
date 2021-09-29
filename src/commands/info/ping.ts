@@ -6,11 +6,12 @@ export default class Ping extends Command {
   constructor(client: Under) {
     super(client, {
       name: 'ping',
-      description: 'ping server ms v2'
+      description: 'ping server ms v2',
+      perms: ['ADMINISTRATOR']
     })
   }
 
-  run = (interaction: CommandInteraction) => {
+  run = async (interaction: CommandInteraction) => {
     interaction.reply({
       content: `O ping do bot é \`${this.client.ws.ping}\`ms.`,
       ephemeral: true
