@@ -5,10 +5,9 @@ declare interface CommandOptions {
   name: string
   description: string,
   options?: ApplicationCommandOptionData[]
-  devOnly?: boolean
+  dev?: boolean
   perms?: PermissionString[]
   permissions?: ApplicationCommandPermissionData[]
-  defaultPermission?: boolean
 }
 
 export default class Command {
@@ -16,10 +15,9 @@ export default class Command {
   name: string
   description: string
   options?: ApplicationCommandOptionData[]
-  devOnly?: boolean
+  dev?: boolean
   perms?: PermissionString[]
   permissions?: ApplicationCommandPermissionData[]
-  defaultPermission?: boolean
   run: Function
 
   constructor(client: Under, options: CommandOptions) {
@@ -27,10 +25,9 @@ export default class Command {
     this.name = options.name
     this.description = options.description
     this.options = options.options
-    this.devOnly = options.devOnly
+    this.dev = options.dev
     this.perms = options.perms
     this.permissions = options.permissions
-    this.defaultPermission = options.defaultPermission
     this.run = async (client: Under, interaction: CommandInteraction) => { }
   }
 }

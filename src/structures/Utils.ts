@@ -1,5 +1,8 @@
 import { CommandInteraction, GuildMember, PermissionString } from 'discord.js'
 
+import moment from 'moment'
+import chalk from 'chalk'
+
 export default class Utils {
   async quickError(interaction: CommandInteraction, message: string) {
     try {
@@ -17,22 +20,22 @@ export default class Utils {
     }
   }
 
-  async log(types: 'SUCESS' | 'ERROR' | 'WARNING' | 'INFO', message: string) {
+  log(types: 'SUCESS' | 'ERROR' | 'WARNING' | 'INFO', message: string) {
 
     if (types === 'SUCESS') {
-      console.log(`[${types}] ${message}`)
+      console.log(`${chalk.gray(`[` + moment().format('HH:mm:ss') + `]`)} ${chalk.green(types)}: ${message}`)
     }
 
     if (types === 'ERROR') {
-      console.log(`[${types}] ${message}`)
+      console.log(`${chalk.gray(`[` + moment().format('HH:mm:ss') + `]`)} ${chalk.red(types)}: ${message}`)
     }
 
     if (types === 'WARNING') {
-      console.log(`[${types}] ${message}`)
+      console.log(`${chalk.gray(`[` + moment().format('HH:mm:ss') + `]`)} ${chalk.yellow(types)}: ${message}`)
     }
 
     if (types === 'INFO') {
-      console.log(`[${types}] ${message}`)
+      console.log(`${chalk.gray(`[` + moment().format('HH:mm:ss') + `]`)} ${chalk.blue(types)}: ${message}`)
     }
   }
 

@@ -15,7 +15,14 @@ export default class InteractionCreate extends Event {
       const member = await interaction.guild?.members.fetch(interaction.user.id)
 
       if (command?.perms && !member?.permissions.has(command.perms, true)) {
-        return await this.client.utils.quickError(interaction, `Você não tem as seguintes permissões: ${await this.client.utils.missingPermissions(member!, command.perms)}.`);
+        return await this.client.utils.quickError(interaction, `Você precisa das seguintes permissões: ${await this.client.utils.missingPermissions(member!, command.perms)}.`)
+      }
+
+      if (command?.dev && this.client.config.devs) {
+        this.client.utils.log('SUCESS', `${interaction.user.id}`)
+
+        const devId = this.client.config.devs.includes(interaction.user.id)
+        if (!devId) return await this.client.utils.quickError(interaction, `Este comando foi feito para pessoas especiais.`)
       }
 
       if (command) await command.run(interaction)

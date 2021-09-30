@@ -7,7 +7,7 @@ export default class Ping extends Command {
     super(client, {
       name: 'ping',
       description: 'ping server ms v2',
-      perms: ['ADMINISTRATOR']
+      perms: ['SEND_MESSAGES', 'EMBED_LINKS']
     })
   }
 

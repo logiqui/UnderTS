@@ -64,5 +64,5 @@ export default class Under extends Client {
 }
 
 function toApplicationCommand(collection: Collection<string, Command>) {
-  return collection.map(s => { return { name: s.name, description: s.description, options: s.options, defaultPermission: s.devOnly ? false : s.defaultPermission } });
+  return collection.map(s => { return { name: s.name, description: s.description, options: s.options } });
 }
