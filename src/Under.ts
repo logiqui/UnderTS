@@ -7,11 +7,14 @@ import Command from './structures/Command'
 import Event from './structures/Event'
 import Utils from './structures/Utils'
 
+import { PrismaClient } from '@prisma/client'
+
 export default class Under extends Client {
   commands: Collection<string, Command>
   events: Collection<string, Event>
   config: typeof Config
   utils: Utils
+  db: PrismaClient
 
   constructor(options: ClientOptions) {
     super(options)
@@ -20,6 +23,7 @@ export default class Under extends Client {
     this.events = new Collection()
     this.config = Config
     this.utils = new Utils()
+    this.db = new PrismaClient()
 
     this.loadCommands()
     this.loadEvents()
