@@ -5,7 +5,7 @@ declare interface CommandOptions {
   name: string
   description: string,
   options?: ApplicationCommandOptionData[]
-  dev?: boolean
+  devOnly?: boolean
   perms?: PermissionString[]
   permissions?: ApplicationCommandPermissionData[]
 }
@@ -15,7 +15,7 @@ export default class Command {
   name: string
   description: string
   options?: ApplicationCommandOptionData[]
-  dev?: boolean
+  devOnly?: boolean
   perms?: PermissionString[]
   permissions?: ApplicationCommandPermissionData[]
   run: Function
@@ -25,7 +25,7 @@ export default class Command {
     this.name = options.name
     this.description = options.description
     this.options = options.options
-    this.dev = options.dev
+    this.devOnly = options.devOnly
     this.perms = options.perms
     this.permissions = options.permissions
     this.run = async (client: Under, interaction: CommandInteraction) => { }

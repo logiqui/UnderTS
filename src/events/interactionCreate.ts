@@ -18,9 +18,7 @@ export default class InteractionCreate extends Event {
         return await this.client.utils.quickError(interaction, `Você precisa das seguintes permissões: ${await this.client.utils.missingPermissions(member!, command.perms)}.`)
       }
 
-      if (command?.dev && this.client.config.devs) {
-        this.client.utils.log('SUCESS', `${interaction.user.id}`)
-
+      if (command?.devOnly && this.client.config.devs) {
         const devId = this.client.config.devs.includes(interaction.user.id)
         if (!devId) return await this.client.utils.quickError(interaction, `Este comando foi feito para pessoas especiais.`)
       }
