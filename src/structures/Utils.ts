@@ -47,4 +47,11 @@ export default class Utils {
       `${missingPerms.slice(0, -1).join(',  ')} and ${missingPerms.slice(-1)[0]}` :
       missingPerms[0]
   }
+
+  formatNumber(value: number) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(value)
+  }
 }
