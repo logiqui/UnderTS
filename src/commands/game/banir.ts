@@ -3,35 +3,44 @@ import { CommandInteraction, MessageEmbed } from 'discord.js'
 import Under from '../../Under'
 import Command from '../../structures/Command'
 
-export default class Ban extends Command {
+export default class Banir extends Command {
   constructor(client: Under) {
     super(client, {
-      name: 'ban',
+      name: 'gameban',
       description: 'Adicionar/Remover banimento',
       perms: ['ADMINISTRATOR'],
       options: [
         {
-          name: 'status',
-          description: 'Adicionar ou remover banimento',
-          type: 'STRING',
-          required: true,
-          choices: [
-            { name: 'add', value: 'addBan' },
-            { name: 'remove', value: 'removeBan' },
+          name: 'add',
+          description: 'Adiciona banimento em um player',
+          type: 'SUB_COMMAND',
+          options: [
+            {
+              name: 'id',
+              description: 'ID desejado',
+              type: 'INTEGER',
+              required: true
+            }
           ]
         },
         {
-          name: 'id',
-          description: 'Id que deseja alterar',
-          type: 'INTEGER',
-          required: true
+          name: 'remove',
+          description: 'Remove banimento de um player',
+          type: 'SUB_COMMAND',
+          options: [
+            {
+              name: 'id',
+              description: 'ID desejado',
+              type: 'INTEGER',
+              required: true
+            }
+          ]
         }
       ]
     })
   }
 
   run = async (interaction: CommandInteraction) => {
-    const status = interaction.options.getString('status', true)
     const playerId = interaction.options.getInteger('id', true)
 
     const userId = await this.client.db.vrp_users.findUnique({ where: { id: playerId } })
@@ -48,7 +57,7 @@ export default class Ban extends Command {
       return await interaction.reply({ embeds: [embed] })
     }
 
-    if (status === 'addBan') {
+    if (interaction.options.getSubcommand(true) === 'add') {
       await this.client.db.vrp_users.update({
         where: { id: playerId },
         data: { banned: true }
@@ -67,7 +76,7 @@ export default class Ban extends Command {
       return await interaction.reply({ embeds: [embed] })
     }
 
-    if (status === 'removeBan') {
+    if (interaction.options.getSubcommand(true) === 'remove') {
       await this.client.db.vrp_users.update({
         where: { id: playerId },
         data: { banned: false }

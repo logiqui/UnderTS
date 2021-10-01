@@ -28,6 +28,7 @@ export default class Command {
     this.devOnly = options.devOnly
     this.perms = options.perms
     this.permissions = options.permissions
+
     this.run = async (client: Under, interaction: CommandInteraction) => { }
   }
 }
