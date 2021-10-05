@@ -51,16 +51,11 @@ export default class Ban extends Command {
     memberTarget.kick(reason)
 
     const embed = new MessageEmbed()
-      .setTitle('** :no_entry: Novo Kick Registrado :no_entry:**')
-      .addFields(
-        { name: '**Usuário:**', value: `${memberTarget}`, inline: true },
-        { name: '**Kickado por:**', value: `${interaction.member}`, inline: true },
-        { name: '**Motivo:**', value: `${reason}`, inline: true }
-      )
-      .setTimestamp()
       .setColor('DARK_BLUE')
-      .setFooter('Under Evolution', interaction.guild?.iconURL({ dynamic: true })!)
-      .setThumbnail("https://media1.tenor.com/images/de413d89fff5502df7cff9f68b24dca5/tenor.gif")
+      .setTitle('**PUNIÇÃO**')
+      .setDescription(`**Player:** ${memberTarget}
+                      **Motivo:** ${reason}
+                      \n**Caso você ache que punição foi aplicada incorretamente abra um ticket para contestar a mesma.**`)
 
     return await interaction.reply({ embeds: [embed] })
   }

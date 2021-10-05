@@ -46,13 +46,9 @@ export default class Banir extends Command {
     const userId = await this.client.db.vrp_users.findUnique({ where: { id: playerId } })
     if (!userId) {
       const embed = new MessageEmbed()
-        .setFields(
-          { name: `ID verificado: `, value: `\`\`\`fix\n${playerId}\`\`\`` },
-          { name: `Status: `, value: `\`\`\`Não existe no banco de dados.\`\`\`` }
-        )
         .setColor(`DARK_BLUE`)
-        .setFooter(`Under Evolution`, interaction.guild?.iconURL({ dynamic: true })!)
-        .setTimestamp()
+        .setDescription(`**ID:** ${playerId}
+                        **Status:** Não existe no banco de dados`)
 
       return await interaction.reply({ embeds: [embed] })
     }
@@ -64,14 +60,9 @@ export default class Banir extends Command {
       })
 
       const embed = new MessageEmbed()
-        .setTitle(`**__Sitema de banimentos In-game__**`)
-        .setFields(
-          { name: `ID verificado: `, value: `\`\`\`fix\n${playerId}\`\`\`` },
-          { name: `Status: `, value: `\`\`\`Banimento adicionado com sucesso.\`\`\`` }
-        )
         .setColor(`DARK_BLUE`)
-        .setFooter(`Under Evolution`, interaction.guild?.iconURL({ dynamic: true })!)
-        .setTimestamp()
+        .setDescription(`**ID:** ${playerId}
+                        **Status:** Banimento efetuado com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }
@@ -83,14 +74,9 @@ export default class Banir extends Command {
       })
 
       const embed = new MessageEmbed()
-        .setTitle(`**__Sitema de banimentos In-game__**`)
-        .setFields(
-          { name: `ID verificado: `, value: `\`\`\`fix\n${playerId}\`\`\`` },
-          { name: `Status: `, value: `\`\`\`Banimento removido com sucesso.\`\`\`` }
-        )
         .setColor(`DARK_BLUE`)
-        .setFooter(`Under Evolution`, interaction.guild?.iconURL({ dynamic: true })!)
-        .setTimestamp()
+        .setDescription(`**ID:** ${playerId}
+                        **Status:** Banimento removico com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }

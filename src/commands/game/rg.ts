@@ -26,13 +26,9 @@ export default class Rg extends Command {
     const userId = await this.client.db.vrp_users.findUnique({ where: { id: playerId } })
     if (!userId) {
       const embed = new MessageEmbed()
-        .setFields(
-          { name: `ID verificado: `, value: `\`\`\`fix\n${playerId}\`\`\`` },
-          { name: `Status: `, value: `\`\`\`Não existe no banco de dados.\`\`\`` }
-        )
         .setColor(`DARK_BLUE`)
-        .setFooter(`Under Evolution`, interaction.guild?.iconURL({ dynamic: true })!)
-        .setTimestamp()
+        .setDescription(`**ID:** ${playerId}
+                        **Status:** Não existe no banco de dados`)
 
       return await interaction.reply({ embeds: [embed] })
     }
@@ -40,30 +36,20 @@ export default class Rg extends Command {
     const identity = await this.client.db.vrp_user_identities.findUnique({ where: { user_id: playerId } })
     if (identity) {
       const embed = new MessageEmbed()
-        .setTitle(`**__Sitema de verificação de Registro__**`)
-        .setFields(
-          { name: `ID verificado: `, value: `\`\`\`fix\n${playerId}\`\`\``, inline: true },
-          { name: `Nome: `, value: `\`\`\`${identity.name}\`\`\``, inline: true },
-          { name: `Sobrenome: `, value: `\`\`\`${identity.secondname}\`\`\``, inline: true },
-          { name: `Rg: `, value: `\`\`\`${identity.registration}\`\`\``, inline: true },
-          { name: `Telefone: `, value: `\`\`\`${identity.phone}\`\`\``, inline: true },
-          { name: `Idade: `, value: `\`\`\`${identity.age}\`\`\``, inline: true }
-        )
         .setColor(`DARK_BLUE`)
-        .setFooter(`Under Evolution`, interaction.guild?.iconURL({ dynamic: true })!)
-        .setTimestamp()
+        .setDescription(`**ID:** ${playerId}
+                        **Nome:** ${identity.name}
+                        **Sobrenome:** ${identity.secondname}
+                        **Rg:** ${identity.registration}
+                        **Telefone**: ${identity.phone}
+                        **Idade:** ${identity.age}`)
 
       return await interaction.reply({ embeds: [embed] })
     } else {
       const embed = new MessageEmbed()
-        .setTitle(`**__Sitema de verificação de Registro__**`)
-        .setFields(
-          { name: `ID verificado: `, value: `\`\`\`fix\n${playerId}\`\`\``, inline: true },
-          { name: `Status: `, value: `\`\`\`Registro não encontrado\`\`\``, inline: true }
-        )
         .setColor(`DARK_BLUE`)
-        .setFooter(`Under Evolution`, interaction.guild?.iconURL({ dynamic: true })!)
-        .setTimestamp()
+        .setDescription(`**ID:** ${playerId}
+                        **Status:** Registro não encontrado`)
 
       return await interaction.reply({ embeds: [embed] })
     }

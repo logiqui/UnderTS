@@ -11,20 +11,31 @@ export default class WL extends Command {
       perms: ['ADMINISTRATOR'],
       options: [
         {
-          name: 'status',
-          description: 'Adicionar ou remover whitelist',
-          type: 'STRING',
-          required: true,
-          choices: [
-            { name: 'add', value: 'addWl' },
-            { name: 'remove', value: 'removeWl' },
+          name: 'add',
+          description: 'Adiciona whitelist em um player',
+          type: 'SUB_COMMAND',
+          options: [
+            {
+              name: 'id',
+              description: 'ID desejado',
+              type: 'INTEGER',
+              required: true
+            }
           ]
         },
         {
-          name: 'id',
-          description: 'Id que deseja alterar',
-          type: 'INTEGER',
-          required: true
+          name: 'remove',
+          description: 'Remove whitelist de um player',
+          type: 'SUB_COMMAND',
+          options: [
+            {
+              name: 'id',
+              description: 'ID desejado',
+              type: 'INTEGER',
+              required: true,
+
+            }
+          ]
         }
       ]
     })
@@ -37,13 +48,9 @@ export default class WL extends Command {
     const userId = await this.client.db.vrp_users.findUnique({ where: { id: playerId } })
     if (!userId) {
       const embed = new MessageEmbed()
-        .setFields(
-          { name: `ID verificado: `, value: `\`\`\`fix\n${playerId}\`\`\`` },
-          { name: `Status: `, value: `\`\`\`Não existe no banco de dados.\`\`\`` }
-        )
         .setColor(`DARK_BLUE`)
-        .setFooter(`Under Evolution`, interaction.guild?.iconURL({ dynamic: true })!)
-        .setTimestamp()
+        .setDescription(`**ID:** ${playerId}
+                        **Status:** Não existe no banco de dados`)
 
       return await interaction.reply({ embeds: [embed] })
     }
@@ -55,14 +62,9 @@ export default class WL extends Command {
       })
 
       const embed = new MessageEmbed()
-        .setTitle(`**__Sitema de whitelist In-game__**`)
-        .setFields(
-          { name: `ID verificado: `, value: `\`\`\`fix\n${playerId}\`\`\`` },
-          { name: `Status: `, value: `\`\`\`Whitelist adicionada com sucesso.\`\`\`` }
-        )
         .setColor(`DARK_BLUE`)
-        .setFooter(`Under Evolution`, interaction.guild?.iconURL({ dynamic: true })!)
-        .setTimestamp()
+        .setDescription(`**ID:** ${playerId}
+                        *Status:** Whitelist adicionada com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }
@@ -74,14 +76,9 @@ export default class WL extends Command {
       })
 
       const embed = new MessageEmbed()
-        .setTitle(`**__Sitema de whitelist In-game__**`)
-        .setFields(
-          { name: `ID verificado: `, value: `\`\`\`fix\n${playerId}\`\`\`` },
-          { name: `Status: `, value: `\`\`\`Whitelist removida com sucesso.\`\`\`` }
-        )
         .setColor(`DARK_BLUE`)
-        .setFooter(`Under Evolution`, interaction.guild?.iconURL({ dynamic: true })!)
-        .setTimestamp()
+        .setDescription(`**ID:** ${playerId}
+                        **Status:** Whitelist removida com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }

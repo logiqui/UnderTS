@@ -21,6 +21,12 @@ export default class Ban extends Command {
           description: 'Motivo do banimento',
           type: 'STRING',
           required: true
+        },
+        {
+          name: 'punishment',
+          description: 'Punição',
+          type: 'STRING',
+          required: true
         }
       ]
     })
@@ -29,6 +35,7 @@ export default class Ban extends Command {
   run = async (interaction: CommandInteraction) => {
     const target = interaction.options.getUser('user', true)
     const reason = interaction.options.getString('reason', true)
+    const punishment = interaction.options.getString('punishment', true)
 
     const memberTarget = await interaction.guild?.members.fetch(target.id)
 
@@ -59,16 +66,15 @@ export default class Ban extends Command {
     memberTarget.ban({ days: 0, reason: reason })
 
     const embed = new MessageEmbed()
-      .setTitle('** :no_entry: Novo Banimento Registrado :no_entry:**')
-      .addFields(
-        { name: '**Usuário:**', value: `${memberTarget}`, inline: true },
-        { name: '**Banido por:**', value: `${interaction.member}`, inline: true },
-        { name: '**Motivo:**', value: `${reason}`, inline: true }
-      )
+      .setTitle('**PUNIÇÃO**')
+      .setDescription(`**Player:** ${memberTarget}
+                      **Motivo:** ${reason}
+                      **Punição:** ${punishment}
+                      \n**Caso você ache que punição foi aplicada incorretamente abra um ticket para contestar a mesma.**`)
       .setTimestamp()
       .setColor('DARK_BLUE')
       .setFooter('Under Evolution', interaction.guild?.iconURL({ dynamic: true })!)
-      .setThumbnail("https://media1.tenor.com/images/de413d89fff5502df7cff9f68b24dca5/tenor.gif")
+      .setThumbnail('https://cdn.discordapp.com/attachments/541115401837346827/893611729865539614/a_9a8ca1be1fd4b3f022ab426e9a0f06bc.gif')
 
     return await interaction.reply({ embeds: [embed] })
   }
