@@ -42,7 +42,6 @@ export default class Whitelist extends Command {
   }
 
   run = async (interaction: CommandInteraction) => {
-    const status = interaction.options.getString('status', true)
     const playerId = interaction.options.getInteger('id', true)
 
     const userId = await this.client.db.vrp_users.findUnique({ where: { id: playerId } })
@@ -55,7 +54,7 @@ export default class Whitelist extends Command {
       return await interaction.reply({ embeds: [embed] })
     }
 
-    if (status === 'addWl') {
+    if (interaction.options.getSubcommand(true) === 'add') {
       await this.client.db.vrp_users.update({
         where: { id: playerId },
         data: { whitelisted: true }
@@ -69,7 +68,7 @@ export default class Whitelist extends Command {
       return await interaction.reply({ embeds: [embed] })
     }
 
-    if (status === 'removeWl') {
+    if (interaction.options.getSubcommand(true) === 'remove') {
       await this.client.db.vrp_users.update({
         where: { id: playerId },
         data: { whitelisted: false }
