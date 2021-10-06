@@ -68,8 +68,8 @@ export default class Ban extends Command {
     const embed = new MessageEmbed()
       .setTitle('**PUNIÇÃO**')
       .setDescription(`**Player:** ${memberTarget}
-                      **Motivo:** ${reason}
                       **Punição:** ${punishment}
+                      **Motivo:** ${reason}
                       \n**Caso você ache que punição foi aplicada incorretamente abra um ticket para contestar a mesma.**`)
       .setTimestamp()
       .setColor('DARK_BLUE')
