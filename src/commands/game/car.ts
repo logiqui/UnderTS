@@ -4,7 +4,7 @@ import Under from '../../Under'
 import Command from '../../structures/Command'
 import moment from 'moment'
 
-export default class Vehicle extends Command {
+export default class Car extends Command {
   constructor(client: Under) {
     super(client, {
       name: 'vehicle',

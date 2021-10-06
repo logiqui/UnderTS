@@ -3,7 +3,7 @@ import { CommandInteraction, MessageEmbed } from 'discord.js'
 import Under from '../../Under'
 import Command from '../../structures/Command'
 
-export default class WL extends Command {
+export default class Whitelist extends Command {
   constructor(client: Under) {
     super(client, {
       name: 'wl',

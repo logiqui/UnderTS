@@ -3,16 +3,16 @@ import { CommandInteraction, MessageEmbed } from 'discord.js'
 import Under from '../../Under'
 import Command from '../../structures/Command'
 
-export default class Group extends Command {
+export default class Priority extends Command {
   constructor(client: Under) {
     super(client, {
-      name: 'group',
-      description: 'Adicionar/Remover/Ver os grupos de um player',
+      name: 'priority',
+      description: 'Adicionar/Remover/Ver prioridade de um player',
       perms: ['ADMINISTRATOR'],
       options: [
         {
           name: 'add',
-          description: 'Adiciona grupo em um player',
+          description: 'Adiciona prioridade para player',
           type: 'SUB_COMMAND',
           options: [
             {
@@ -22,7 +22,7 @@ export default class Group extends Command {
               required: true
             },
             {
-              name: 'group',
+              name: 'steam',
               description: 'Grupo desejado',
               type: 'STRING',
               required: true
@@ -31,7 +31,7 @@ export default class Group extends Command {
         },
         {
           name: 'remove',
-          description: 'Remove grupo de um player',
+          description: 'Remove prioridade para player',
           type: 'SUB_COMMAND',
           options: [
             {
@@ -42,7 +42,7 @@ export default class Group extends Command {
 
             },
             {
-              name: 'group',
+              name: 'steam',
               description: 'Grupo desejado',
               type: 'STRING',
               required: true
@@ -51,7 +51,7 @@ export default class Group extends Command {
         },
         {
           name: 'get',
-          description: 'Ver grupos de um player',
+          description: 'Verifica se o player tem prioridade',
           type: 'SUB_COMMAND',
           options: [
             {
