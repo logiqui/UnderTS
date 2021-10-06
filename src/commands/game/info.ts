@@ -50,7 +50,8 @@ export default class Info extends Command {
     const embed = new MessageEmbed()
       .setColor(`DARK_BLUE`)
       .setDescription(`**ID:** ${playerId}
-                      **Identifiers:** \n${identifiers.join('\n')}`)
+                      **Identifiers:** ${identifiers.join('\n')}\n
+                      **Status:** Verificação efetuada com sucesso`)
 
     return await interaction.reply({ embeds: [embed] })
   }

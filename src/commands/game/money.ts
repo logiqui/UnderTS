@@ -92,8 +92,8 @@ export default class Money extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Bando Atual:** ${this.client.utils.formatNumber(user.bank!)}
-                          **Banco Antigo:** ${this.client.utils.formatNumber(oldAddMoney!)}
+                          **Bando Atual:** ${this.client.utils.formatMoney(user.bank!)}
+                          **Banco Antigo:** ${this.client.utils.formatMoney(oldAddMoney!)}
                           **Status:** Adicionado com sucesso`)
 
         return await interaction.reply({ embeds: [embed] })
@@ -109,8 +109,8 @@ export default class Money extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Bando Atual:** ${this.client.utils.formatNumber(user.bank!)}
-                          **Banco Antigo:** ${this.client.utils.formatNumber(oldMoney!)}
+                          **Bando Atual:** ${this.client.utils.formatMoney(user.bank!)}
+                          **Banco Antigo:** ${this.client.utils.formatMoney(oldMoney!)}
                           **Status:** Removido com sucesso`)
 
         return await interaction.reply({ embeds: [embed] })
@@ -120,7 +120,7 @@ export default class Money extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Bando Atual:** ${this.client.utils.formatNumber(user.bank!)}
+                          **Bando Atual:** ${this.client.utils.formatMoney(user.bank!)}
                           **Status:** Verificação efetuada com sucesso`)
 
         return await interaction.reply({ embeds: [embed] })
