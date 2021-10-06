@@ -2,5 +2,38 @@
   "token": "ODkyNTAyNjIxOTg4OTk5MjM4.YVN11g.EbMYshXrGIWVTLFaRVjGLQBYezE",
   "devs": [
     "244265165929971713"
+  ],
+  "groups": [
+    "policia",
+    "policiaacao",
+    "policia-paisana",
+    "policia-comando",
+    "paramedico",
+    "paramedico-paisana",
+    "paramedico-diretor",
+    "mecanico",
+    "mecanico-paisana",
+    "bennys",
+    "ballas",
+    "grove",
+    "vagos",
+    "bloods",
+    "crips",
+    "ndrangheta",
+    "siciliana",
+    "lifeinvader",
+    "arcadius",
+    "manager",
+    "off-manager",
+    "administrador",
+    "off-administrador",
+    "moderador",
+    "off-moderador",
+    "suporte",
+    "off-suporte",
+    "aprovador-wl",
+    "elite",
+    "ultimate",
+    "rental"
   ]
 }

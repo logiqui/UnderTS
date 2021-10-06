@@ -12,7 +12,7 @@ export default class Money extends Command {
       options: [
         {
           name: 'add',
-          description: 'Adiciona banimento em um player',
+          description: 'Adiciona dinheiro para um player',
           type: 'SUB_COMMAND',
           options: [
             {
@@ -31,7 +31,7 @@ export default class Money extends Command {
         },
         {
           name: 'remove',
-          description: 'Remove banimento de um player',
+          description: 'Remove dinheiro para um player',
           type: 'SUB_COMMAND',
           options: [
             {
@@ -61,7 +61,7 @@ export default class Money extends Command {
               required: true
             }
           ]
-        },
+        }
       ]
     })
   }
@@ -92,8 +92,9 @@ export default class Money extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Bando atual:** ${this.client.utils.formatNumber(user.bank!)}
-                          **Banco antigo:** ${this.client.utils.formatNumber(oldAddMoney!)}`)
+                          **Bando Atual:** ${this.client.utils.formatNumber(user.bank!)}
+                          **Banco Antigo:** ${this.client.utils.formatNumber(oldAddMoney!)}
+                          **Status:** Adicionado com sucesso`)
 
         return await interaction.reply({ embeds: [embed] })
       }
@@ -108,8 +109,9 @@ export default class Money extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Bando atual:** ${this.client.utils.formatNumber(user.bank!)}
-                          **Banco antigo:** ${this.client.utils.formatNumber(oldMoney!)}`)
+                          **Bando Atual:** ${this.client.utils.formatNumber(user.bank!)}
+                          **Banco Antigo:** ${this.client.utils.formatNumber(oldMoney!)}
+                          **Status:** Removido com sucesso`)
 
         return await interaction.reply({ embeds: [embed] })
       }
@@ -118,7 +120,8 @@ export default class Money extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Bando atual:** ${this.client.utils.formatNumber(user.bank!)}`)
+                          **Bando Atual:** ${this.client.utils.formatNumber(user.bank!)}
+                          **Status:** Checagem efetuada com sucesso`)
 
         return await interaction.reply({ embeds: [embed] })
       }

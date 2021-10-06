@@ -76,7 +76,7 @@ export default class Banir extends Command {
       const embed = new MessageEmbed()
         .setColor(`DARK_BLUE`)
         .setDescription(`**ID:** ${playerId}
-                        **Status:** Banimento removico com sucesso`)
+                        **Status:** Banimento removido com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }

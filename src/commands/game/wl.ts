@@ -64,7 +64,7 @@ export default class WL extends Command {
       const embed = new MessageEmbed()
         .setColor(`DARK_BLUE`)
         .setDescription(`**ID:** ${playerId}
-                        *Status:** Whitelist adicionada com sucesso`)
+                        **Status:** Whitelist adicionada com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }

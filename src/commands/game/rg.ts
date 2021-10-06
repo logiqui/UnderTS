@@ -42,7 +42,8 @@ export default class Rg extends Command {
                         **Sobrenome:** ${identity.secondname}
                         **Rg:** ${identity.registration}
                         **Telefone**: ${identity.phone}
-                        **Idade:** ${identity.age}`)
+                        **Idade:** ${identity.age}
+                        **Status:** Checagem efetuada com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     } else {
