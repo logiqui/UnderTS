@@ -1,4 +1,4 @@
-import { CommandInteraction, MessageEmbed } from 'discord.js'
+import { CommandInteraction, DataResolver, MessageEmbed } from 'discord.js'
 
 import Under from '../../Under'
 import Command from '../../structures/Command'
@@ -86,7 +86,7 @@ export default class Inventory extends Command {
     })
 
     const data = JSON.parse(inventory?.dvalue!)
-    return data.inventory
+    return data
   }
 
   displayInventory = async (userId: number) => {
@@ -101,7 +101,7 @@ export default class Inventory extends Command {
 
     let inventoryArray: string[] = []
     for (const [k, v] of Object.entries<any>(data.inventory)) {
-      inventoryArray.push(`${this.client.utils.formatMoney(v.amount)}x - ${k}`)
+      inventoryArray.push(`${this.client.utils.formatNumber(v.amount)}x - ${k}`)
     }
 
     return inventoryArray
@@ -123,10 +123,75 @@ export default class Inventory extends Command {
     if (interaction.options.getSubcommand(true) === 'add') {
       const item = interaction.options.getString('item', true)
       const quantity = interaction.options.getInteger('quantity', true)
-      const inventory = await this.getInventory(playerId)
+      const data = await this.getInventory(playerId)
+      const newInventory = data.inventory
 
-      inventory[item] ? inventory[item].amount += quantity : inventory[item] = { amount: quantity }
+      newInventory[item] ? newInventory[item].amount += quantity : newInventory[item] = { amount: quantity }
 
+      data.inventory = newInventory
+      await this.client.db.vrp_user_data.update({
+        where: {
+          user_id_dkey: {
+            user_id: playerId,
+            dkey: 'vRP:datatable'
+          }
+        },
+        data: {
+          dvalue: JSON.stringify(data)
+        }
+      })
+
+      const embed = new MessageEmbed()
+        .setColor(`DARK_BLUE`)
+        .setDescription(`** ID:** ${playerId}
+                        **Item Adicionado:** ${item}
+                        **Quantidade Adicionada:** ${this.client.utils.formatNumber(quantity)}x
+                        **Status:** Adicionado com sucesso`)
+
+      return await interaction.reply({ embeds: [embed] })
+    }
+
+    if (interaction.options.getSubcommand(true) === 'remove') {
+      const item = interaction.options.getString('item', true)
+      const quantity = interaction.options.getInteger('quantity', true)
+      const data = await this.getInventory(playerId)
+      const newInventory = data.inventory
+
+      if (newInventory[item].amount < quantity) {
+        const embed = new MessageEmbed()
+          .setColor(`DARK_BLUE`)
+          .setDescription(`** ID:** ${playerId}
+                          **Status:** O player não possui este item`)
+
+        return await interaction.reply({ embeds: [embed] })
+      }
+
+      newInventory[item].amount -= quantity
+      if (!newInventory[item].amount) {
+        delete newInventory[item]
+      }
+
+      data.inventory = newInventory
+      await this.client.db.vrp_user_data.update({
+        where: {
+          user_id_dkey: {
+            user_id: playerId,
+            dkey: 'vRP:datatable'
+          }
+        },
+        data: {
+          dvalue: JSON.stringify(data)
+        }
+      })
+
+      const embed = new MessageEmbed()
+        .setColor(`DARK_BLUE`)
+        .setDescription(`** ID:** ${playerId}
+                        **Item Removido:** ${item}
+                        **Quantidade Removida:** ${this.client.utils.formatNumber(quantity)}x
+                        **Status:** Removido com sucesso`)
+
+      return await interaction.reply({ embeds: [embed] })
     }
 
     if (interaction.options.getSubcommand(true) === 'get') {
