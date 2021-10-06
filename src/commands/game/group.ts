@@ -159,7 +159,7 @@ export default class Group extends Command {
         .setColor(`DARK_BLUE`)
         .setDescription(`**ID:** ${playerId}
                         **Grupos Atuais:** ${JSON.stringify(player?.groups)}
-                        **Status:** Checagem efetuada com sucesso`)
+                        **Status:** Verificação efetuada com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }

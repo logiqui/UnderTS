@@ -3,21 +3,34 @@ import { CommandInteraction, MessageEmbed } from 'discord.js'
 import Under from '../../Under'
 import Command from '../../structures/Command'
 
-export default class Rg extends Command {
+export default class Info extends Command {
   constructor(client: Under) {
     super(client, {
-      name: 'rg',
-      description: 'Ver registros do player',
+      name: 'info',
+      description: 'Ver informações do player',
       perms: ['ADMINISTRATOR'],
       options: [
         {
           name: 'id',
-          description: 'Id que deseja alterar',
+          description: 'ID desejado',
           type: 'INTEGER',
           required: true
         }
       ]
     })
+  }
+
+  getIdentifiers = async (userId: number) => {
+    const vehicles = await this.client.db.vrp_user_identifiers.findMany({
+      where: { user_id: userId }
+    })
+
+    let identifierList: string[] = []
+    vehicles.map(user => {
+      identifierList.push(user.identifier)
+    })
+
+    return identifierList
   }
 
   run = async (interaction: CommandInteraction) => {
@@ -33,25 +46,11 @@ export default class Rg extends Command {
       return await interaction.reply({ embeds: [embed] })
     }
 
-    const identity = await this.client.db.vrp_user_identities.findUnique({ where: { user_id: playerId } })
-    if (!identity) {
-      const embed = new MessageEmbed()
-        .setColor(`DARK_BLUE`)
-        .setDescription(`**ID:** ${playerId}
-                        **Status:** Registro não encontrado`)
-
-      return await interaction.reply({ embeds: [embed] })
-    }
-
+    const identifiers = await this.getIdentifiers(playerId)
     const embed = new MessageEmbed()
       .setColor(`DARK_BLUE`)
       .setDescription(`**ID:** ${playerId}
-                      **Nome:** ${identity.name}
-                      **Sobrenome:** ${identity.secondname}
-                      **Rg:** ${identity.registration}
-                      **Telefone**: ${identity.phone}
-                      **Idade:** ${identity.age}
-                      **Status:** Verificação efetuada com sucesso`)
+                      **Identifiers:** \n${identifiers.join('\n')}`)
 
     return await interaction.reply({ embeds: [embed] })
   }

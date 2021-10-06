@@ -121,7 +121,7 @@ export default class Money extends Command {
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
                           **Bando Atual:** ${this.client.utils.formatNumber(user.bank!)}
-                          **Status:** Checagem efetuada com sucesso`)
+                          **Status:** Verificação efetuada com sucesso`)
 
         return await interaction.reply({ embeds: [embed] })
       }

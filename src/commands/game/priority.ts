@@ -149,7 +149,7 @@ export default class Priority extends Command {
         .setDescription(`**ID:** ${playerId}
                         **Steam:** ${player?.steam}
                         **Prioridade:** ${player?.priority}
-                        **Status:** Checagem efetuada com sucesso`)
+                        **Status:** Verificação efetuada com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }

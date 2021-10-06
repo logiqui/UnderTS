@@ -73,7 +73,7 @@ export default class Car extends Command {
     })
 
     let vehList: string[] = []
-    vehicles.forEach(vehicle => {
+    vehicles.map(vehicle => {
       vehList.push(vehicle.vehicle)
     })
 
