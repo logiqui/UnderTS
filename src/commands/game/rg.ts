@@ -34,19 +34,7 @@ export default class Rg extends Command {
     }
 
     const identity = await this.client.db.vrp_user_identities.findUnique({ where: { user_id: playerId } })
-    if (identity) {
-      const embed = new MessageEmbed()
-        .setColor(`DARK_BLUE`)
-        .setDescription(`**ID:** ${playerId}
-                        **Nome:** ${identity.name}
-                        **Sobrenome:** ${identity.secondname}
-                        **Rg:** ${identity.registration}
-                        **Telefone**: ${identity.phone}
-                        **Idade:** ${identity.age}
-                        **Status:** Checagem efetuada com sucesso`)
-
-      return await interaction.reply({ embeds: [embed] })
-    } else {
+    if (!identity) {
       const embed = new MessageEmbed()
         .setColor(`DARK_BLUE`)
         .setDescription(`**ID:** ${playerId}
@@ -54,5 +42,17 @@ export default class Rg extends Command {
 
       return await interaction.reply({ embeds: [embed] })
     }
+
+    const embed = new MessageEmbed()
+      .setColor(`DARK_BLUE`)
+      .setDescription(`**ID:** ${playerId}
+                      **Nome:** ${identity.name}
+                      **Sobrenome:** ${identity.secondname}
+                      **Rg:** ${identity.registration}
+                      **Telefone**: ${identity.phone}
+                      **Idade:** ${identity.age}
+                      **Status:** Checagem efetuada com sucesso`)
+
+    return await interaction.reply({ embeds: [embed] })
   }
 }
