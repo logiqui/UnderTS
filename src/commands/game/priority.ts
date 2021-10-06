@@ -23,8 +23,14 @@ export default class Priority extends Command {
             },
             {
               name: 'steam',
-              description: 'Grupo desejado',
+              description: 'Steam (sem o `steam:`)',
               type: 'STRING',
+              required: true
+            },
+            {
+              name: 'lvl',
+              description: 'Nível de Prioridade',
+              type: 'INTEGER',
               required: true
             }
           ]
@@ -40,12 +46,6 @@ export default class Priority extends Command {
               type: 'INTEGER',
               required: true,
 
-            },
-            {
-              name: 'steam',
-              description: 'Grupo desejado',
-              type: 'STRING',
-              required: true
             }
           ]
         },
@@ -79,91 +79,79 @@ export default class Priority extends Command {
       return await interaction.reply({ embeds: [embed] })
     }
 
-    const user = await this.client.db.vrp_users.findUnique({ where: { id: playerId } })
-    if (user) {
-      if (interaction.options.getSubcommand(true) === 'add') {
-        const group = interaction.options.getString('group', true)
+    if (interaction.options.getSubcommand(true) === 'add') {
+      const steam = interaction.options.getString('steam', true)
+      const priority = interaction.options.getInteger('lvl', true)
 
-        const groups = JSON.parse(userId?.groups!)
-        const groupExists = this.client.config.groups.includes(group!)
-        if (!groupExists) {
-          const embed = new MessageEmbed()
-            .setColor(`DARK_BLUE`)
-            .setDescription(`**ID:** ${playerId}
-                            **Status:** O grupo \`\`${group}\`\` não existe`)
-
-          return await interaction.reply({ embeds: [embed] })
-        }
-
-        if (!groups[group!]) {
-          groups[group!] = true
-
-          await this.client.db.vrp_users.update({ where: { id: playerId }, data: { groups: JSON.stringify(groups) } })
-          const embed = new MessageEmbed()
-            .setColor(`DARK_BLUE`)
-            .setDescription(`**ID:** ${playerId}
-                            **Grupo Adicionado:** ${group}
-                            **Grupos Atuais:** ${JSON.stringify(groups)}
-                            **Status:** Adicionado com sucesso`)
-
-          return await interaction.reply({ embeds: [embed] })
-        }
-
+      const hasPriority = await this.client.db.vrp_priority.findUnique({ where: { user_id: playerId } })
+      if (!hasPriority) {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Status:** Este player já possui o grupo \`\`${group}\`\``)
+                        **Status:** Este player já possui prioridade na fila`)
 
         return await interaction.reply({ embeds: [embed] })
       }
 
-      if (interaction.options.getSubcommand(true) === 'remove') {
-        const group = interaction.options.getString('group', true)
-
-        const groups = JSON.parse(userId?.groups!)
-        const groupExists = this.client.config.groups.includes(group!)
-        if (!groupExists) {
-          const embed = new MessageEmbed()
-            .setColor(`DARK_BLUE`)
-            .setDescription(`**ID:** ${playerId}
-                            **Status:** O grupo \`\`${group}\`\` não existe`)
-
-          return await interaction.reply({ embeds: [embed] })
+      await this.client.db.vrp_priority.create({
+        data: {
+          user_id: playerId,
+          steam: `steam:${steam}`,
+          priority: priority
         }
+      })
 
-        if (groups[group!]) {
-          delete groups[group!]
+      const embed = new MessageEmbed()
+        .setColor(`DARK_BLUE`)
+        .setDescription(`**ID:** ${playerId}
+                        **Steam:** ${steam}
+                        **Prioridade:** ${priority}
+                        **Status:** Prioridade adicionada com sucesso`)
 
-          await this.client.db.vrp_users.update({ where: { id: playerId }, data: { groups: JSON.stringify(groups) } })
-          const embed = new MessageEmbed()
-            .setColor(`DARK_BLUE`)
-            .setDescription(`**ID:** ${playerId}
-                            **Grupo Removido:** ${group}
-                            **Grupos Atuais:** ${JSON.stringify(groups)}
-                            **Status:** Removido com sucesso`)
+      return await interaction.reply({ embeds: [embed] })
+    }
 
-          return await interaction.reply({ embeds: [embed] })
-        }
-
+    if (interaction.options.getSubcommand(true) === 'remove') {
+      const hasPriority = await this.client.db.vrp_priority.findUnique({ where: { user_id: playerId } })
+      if (!hasPriority) {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Status:** O player não possui este grupo \`\`${group}\`\``)
+                        **Status:** Este não possui prioridade na fila`)
 
         return await interaction.reply({ embeds: [embed] })
       }
 
-      if (interaction.options.getSubcommand(true) === 'get') {
-        const player = await this.client.db.vrp_users.findUnique({ where: { id: playerId } })
+      const embed = new MessageEmbed()
+        .setColor(`DARK_BLUE`)
+        .setDescription(`**ID:** ${playerId}
+                          **Steam:** ${hasPriority.steam}
+                          **Prioridade:** ${hasPriority.priority}
+                          **Status:** Prioridade removida com sucesso`)
 
+      await this.client.db.vrp_priority.delete({ where: { user_id: playerId } })
+      return await interaction.reply({ embeds: [embed] })
+    }
+
+    if (interaction.options.getSubcommand(true) === 'get') {
+      const player = await this.client.db.vrp_priority.findUnique({ where: { user_id: playerId } })
+      if (!player) {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Grupos Atuais:** ${JSON.stringify(player?.groups)}
-                          **Status:** Checagem efetuada com sucesso`)
+                          **Status:** Não existe no banco de dados`)
 
         return await interaction.reply({ embeds: [embed] })
       }
+
+      const embed = new MessageEmbed()
+        .setColor(`DARK_BLUE`)
+        .setDescription(`**ID:** ${playerId}
+                        **Steam:** ${player?.steam}
+                        **Prioridade:** ${player?.priority}
+                        **Status:** Checagem efetuada com sucesso`)
+
+      return await interaction.reply({ embeds: [embed] })
     }
   }
 }
