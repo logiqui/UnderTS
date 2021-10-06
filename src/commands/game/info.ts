@@ -21,12 +21,12 @@ export default class Info extends Command {
   }
 
   getIdentifiers = async (userId: number) => {
-    const vehicles = await this.client.db.vrp_user_identifiers.findMany({
+    const info = await this.client.db.vrp_user_identifiers.findMany({
       where: { user_id: userId }
     })
 
     let identifierList: string[] = []
-    vehicles.map(user => {
+    info.map(user => {
       identifierList.push(user.identifier)
     })
 

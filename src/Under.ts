@@ -1,7 +1,6 @@
 import { Client, ClientOptions, Collection } from 'discord.js'
 import { readdirSync } from 'fs'
 import { join } from 'path'
-import chalk from 'chalk'
 
 import Config from '../config.json'
 import Command from './structures/Command'
@@ -69,5 +68,5 @@ export default class Under extends Client {
 }
 
 function toApplicationCommand(collection: Collection<string, Command>) {
-  return collection.map(s => { return { name: s.name, description: s.description, options: s.options } });
+  return collection.map(s => { return { name: s.name, description: s.description, options: s.options } })
 }
