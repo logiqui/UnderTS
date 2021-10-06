@@ -90,7 +90,7 @@ export default class Money extends Command {
           const embed = new MessageEmbed()
             .setColor(`DARK_BLUE`)
             .setDescription(`**ID:** ${playerId}
-                          **Status:** O grupo \`\`${group}\`\` não existe`)
+                            **Status:** O grupo \`\`${group}\`\` não existe`)
 
           return await interaction.reply({ embeds: [embed] })
         }
@@ -126,7 +126,7 @@ export default class Money extends Command {
           const embed = new MessageEmbed()
             .setColor(`DARK_BLUE`)
             .setDescription(`**ID:** ${playerId}
-                          **Status:** O grupo \`\`${group}\`\` não existe`)
+                            **Status:** O grupo \`\`${group}\`\` não existe`)
 
           return await interaction.reply({ embeds: [embed] })
         }
