@@ -16,7 +16,7 @@ export default class InteractionCreate extends Event {
       const command = this.client.commands.get(interaction.commandName)
       const member = await interaction.guild?.members.fetch(interaction.user.id)
 
-      if (interaction.inGuild()) return
+      if (!interaction.inGuild) return
 
       if (command?.perms && !member?.permissions.has(command.perms, true)) {
         return await this.client.utils.quickError(interaction, `Você precisa das seguintes permissões: ${await this.client.utils.missingPermissions(member!, command.perms)}.`)
