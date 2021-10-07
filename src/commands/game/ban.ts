@@ -3,10 +3,10 @@ import { CommandInteraction, MessageEmbed } from 'discord.js'
 import Under from '../../Under'
 import Command from '../../structures/Command'
 
-export default class Banir extends Command {
+export default class ban extends Command {
   constructor(client: Under) {
     super(client, {
-      name: 'gameban',
+      name: 'ban',
       description: 'Adicionar/Remover banimento',
       perms: ['ADMINISTRATOR'],
       options: [
@@ -31,6 +31,19 @@ export default class Banir extends Command {
             {
               name: 'id',
               description: 'ID desejado',
+              type: 'INTEGER',
+              required: true
+            }
+          ]
+        },
+        {
+          name: 'get',
+          description: 'Ver se o player está banido',
+          type: 'SUB_COMMAND',
+          options: [
+            {
+              name: 'id',
+              description: 'ID Desejado',
               type: 'INTEGER',
               required: true
             }
@@ -77,6 +90,16 @@ export default class Banir extends Command {
         .setColor(`DARK_BLUE`)
         .setDescription(`**ID:** ${playerId}
                         **Status:** Banimento removido com sucesso`)
+
+      return await interaction.reply({ embeds: [embed] })
+    }
+
+    if (interaction.options.getSubcommand(true) === 'get') {
+      const embed = new MessageEmbed()
+        .setColor(`DARK_BLUE`)
+        .setDescription(`**ID:** ${playerId}
+                        **Banido:** ${userId.banned ? 'True' : 'False'}
+                        **Status:** Verificação efetuada com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }

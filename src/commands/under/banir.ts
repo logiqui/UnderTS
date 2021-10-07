@@ -6,7 +6,7 @@ import Command from '../../structures/Command'
 export default class Ban extends Command {
   constructor(client: Under) {
     super(client, {
-      name: 'ban',
+      name: 'serverban',
       description: 'Banir um membro do discord',
       perms: ['BAN_MEMBERS'],
       options: [
