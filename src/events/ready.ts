@@ -21,8 +21,4 @@ export default class Ready extends Event {
 
     this.client.registryCommands()
   }
-
-  updatePresent = async () => {
-    return
-  }
 }

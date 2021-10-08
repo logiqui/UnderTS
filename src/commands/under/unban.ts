@@ -15,12 +15,6 @@ export default class Ban extends Command {
           description: 'ID desejado',
           type: 'STRING',
           required: true
-        },
-        {
-          name: 'reason',
-          description: 'Motivo do unban',
-          type: 'STRING',
-          required: true
         }
       ]
     })
@@ -28,7 +22,6 @@ export default class Ban extends Command {
 
   run = async (interaction: CommandInteraction) => {
     const userId = interaction.options.getString('id', true)
-    const reason = interaction.options.getString('reason', true)
 
     interaction.guild?.members.unban(userId).then(user => {
       const embed = new MessageEmbed()

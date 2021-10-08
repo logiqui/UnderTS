@@ -9,7 +9,7 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
+    "strictPropertyInitialization": false,
     "alwaysStrict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
@@ -19,8 +19,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
     "lib": [
-      "ESNext"
-    ]
+      "es5",
+      "es6"
+    ],
   }
 }
