@@ -90,13 +90,7 @@ export default class Inventory extends Command {
   }
 
   displayInventory = async (userId: number) => {
-    const inventory = await this.client.db.vrp_user_data.findFirst({
-      where: {
-        user_id: userId,
-        dkey: 'vRP:datatable'
-      }
-    })
-
+    const inventory = await this.getInventory(userId)
     const data = JSON.parse(inventory?.dvalue!)
 
     let inventoryArray: string[] = []
@@ -200,7 +194,7 @@ export default class Inventory extends Command {
       const embed = new MessageEmbed()
         .setColor(`DARK_BLUE`)
         .setDescription(`** ID:** ${playerId}
-                        **Inventario:** ${inventory.join('\n')}\n
+                        **Inventario:** \n${inventory.join('\n')}
                         **Status:** Adicionado com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
