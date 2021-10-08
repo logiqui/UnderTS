@@ -106,7 +106,7 @@ export default class Car extends Command {
             engine: 1000,
             body: 1000,
             fuel: 100,
-            ipva: moment().toString()
+            ipva: new Date().getTime().toString().slice(0, 10)
           }
         })
 
@@ -114,7 +114,7 @@ export default class Car extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Veiculo:** ${vehicle}
+                          **Veiculo Adicionado:** ${vehicle}
                           **Veiculos Atuais:** ${vehList.join(', ')}
                           **Status:** Adicionado com sucesso`)
 
@@ -135,7 +135,7 @@ export default class Car extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Veiculo** ${vehicle}
+                          **Veiculo Removido** ${vehicle}
                           **Veiculos Atuais:** ${vehList.join(', ')}
                           **Status:** Deletado com sucesso`)
 
