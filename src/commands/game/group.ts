@@ -76,7 +76,7 @@ export default class Group extends Command {
         .setDescription(`**ID:** ${playerId}
                         **Status:** Não existe no banco de dados`)
 
-      return await interaction.reply({ embeds: [embed] })
+      return await interaction.reply({ embeds: [embed], ephemeral: true })
     }
 
 
@@ -91,27 +91,26 @@ export default class Group extends Command {
           .setDescription(`**ID:** ${playerId}
                           **Status:** O grupo \`\`${group}\`\` não existe`)
 
-        return await interaction.reply({ embeds: [embed] })
+        return await interaction.reply({ embeds: [embed], ephemeral: true })
       }
 
-      if (!groups[group!]) {
-        groups[group!] = true
-
-        await this.client.db.vrp_users.update({ where: { id: playerId }, data: { groups: JSON.stringify(groups) } })
+      if (groups[group!]) {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Grupo Adicionado:** ${group}
-                          **Grupos Atuais:** ${JSON.stringify(groups)}
-                          **Status:** Adicionado com sucesso`)
+                          **Status:** Este player já possui o grupo \`\`${group}\`\``)
 
-        return await interaction.reply({ embeds: [embed] })
+        return await interaction.reply({ embeds: [embed], ephemeral: true })
       }
 
+      groups[group!] = true
+      await this.client.db.vrp_users.update({ where: { id: playerId }, data: { groups: JSON.stringify(groups) } })
       const embed = new MessageEmbed()
         .setColor(`DARK_BLUE`)
         .setDescription(`**ID:** ${playerId}
-                        **Status:** Este player já possui o grupo \`\`${group}\`\``)
+                        **Grupo Adicionado:** ${group}
+                        **Grupos Atuais:** ${JSON.stringify(groups)}
+                        **Status:** Adicionado com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }
@@ -127,27 +126,26 @@ export default class Group extends Command {
           .setDescription(`**ID:** ${playerId}
                           **Status:** O grupo \`\`${group}\`\` não existe`)
 
-        return await interaction.reply({ embeds: [embed] })
+        return await interaction.reply({ embeds: [embed], ephemeral: true })
       }
 
-      if (groups[group!]) {
-        delete groups[group!]
-
-        await this.client.db.vrp_users.update({ where: { id: playerId }, data: { groups: JSON.stringify(groups) } })
+      if (!groups[group!]) {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Grupo Removido:** ${group}
-                          **Grupos Atuais:** ${JSON.stringify(groups)}
-                          **Status:** Removido com sucesso`)
+                          **Status:** O player não possui este grupo \`\`${group}\`\``)
 
-        return await interaction.reply({ embeds: [embed] })
+        return await interaction.reply({ embeds: [embed], ephemeral: true })
       }
 
+      delete groups[group!]
+      await this.client.db.vrp_users.update({ where: { id: playerId }, data: { groups: JSON.stringify(groups) } })
       const embed = new MessageEmbed()
         .setColor(`DARK_BLUE`)
         .setDescription(`**ID:** ${playerId}
-                        **Status:** O player não possui este grupo \`\`${group}\`\``)
+                        **Grupo Removido:** ${group}
+                        **Grupos Atuais:** ${JSON.stringify(groups)}
+                        **Status:** Removido com sucesso`)
 
       return await interaction.reply({ embeds: [embed] })
     }

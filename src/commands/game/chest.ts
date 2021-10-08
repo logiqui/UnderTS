@@ -31,7 +31,7 @@ export default class Chest extends Command {
             {
               name: 'id',
               description: 'ID desejado',
-              type: 'INTEGER',
+              type: 'STRING',
               required: true
             },
             {
@@ -104,7 +104,7 @@ export default class Chest extends Command {
       const vehChest = await this.displayChest(`chest:u${playerId}veh_${vehName}`)
       const embed = new MessageEmbed()
         .setColor(`DARK_BLUE`)
-        .setDescription(`**ID:** ${playerId}
+        .setDescription(`**ID:** ${userId}
                         **Vehicle:** ${vehName}
                         **Itens:** ${vehChest.join('\n')}\n
                         **Status:** Verificação efetuada com sucesso`)

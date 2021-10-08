@@ -111,7 +111,7 @@ export default class Inventory extends Command {
         .setDescription(`**ID:** ${playerId}
                         **Status:** Não existe no banco de dados`)
 
-      return await interaction.reply({ embeds: [embed] })
+      return await interaction.reply({ embeds: [embed], ephemeral: true })
     }
 
     if (interaction.options.getSubcommand(true) === 'add') {
@@ -157,7 +157,7 @@ export default class Inventory extends Command {
           .setDescription(`** ID:** ${playerId}
                           **Status:** O player não possui este item`)
 
-        return await interaction.reply({ embeds: [embed] })
+        return await interaction.reply({ embeds: [embed], ephemeral: true })
       }
 
       newInventory[item].amount -= quantity

@@ -30,7 +30,7 @@ export default class Rg extends Command {
         .setDescription(`**ID:** ${playerId}
                         **Status:** Não existe no banco de dados`)
 
-      return await interaction.reply({ embeds: [embed] })
+      return await interaction.reply({ embeds: [embed], ephemeral: true })
     }
 
     const identity = await this.client.db.vrp_user_identities.findUnique({ where: { user_id: playerId } })
@@ -40,7 +40,7 @@ export default class Rg extends Command {
         .setDescription(`**ID:** ${playerId}
                         **Status:** Registro não encontrado`)
 
-      return await interaction.reply({ embeds: [embed] })
+      return await interaction.reply({ embeds: [embed], ephemeral: true })
     }
 
     const embed = new MessageEmbed()

@@ -30,7 +30,7 @@ export default class Banir extends Command {
         .setDescription(`**ID:** ${playerId}
                         **Status:** Não existe no banco de dados`)
 
-      return await interaction.reply({ embeds: [embed] })
+      return await interaction.reply({ embeds: [embed], ephemeral: true })
     }
 
     await this.client.db.vrp_user_data.deleteMany({

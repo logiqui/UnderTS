@@ -84,13 +84,13 @@ export default class Priority extends Command {
       const priority = interaction.options.getInteger('lvl', true)
 
       const hasPriority = await this.client.db.vrp_priority.findUnique({ where: { user_id: playerId } })
-      if (!hasPriority) {
+      if (hasPriority) {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                        **Status:** Este player já possui prioridade na fila`)
+                          **Status:** Este player já possui prioridade na fila`)
 
-        return await interaction.reply({ embeds: [embed] })
+        return await interaction.reply({ embeds: [embed], ephemeral: true })
       }
 
       await this.client.db.vrp_priority.create({
@@ -117,17 +117,17 @@ export default class Priority extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                        **Status:** Este não possui prioridade na fila`)
+                          **Status:** Este player não possui prioridade na fila`)
 
-        return await interaction.reply({ embeds: [embed] })
+        return await interaction.reply({ embeds: [embed], ephemeral: true })
       }
 
       const embed = new MessageEmbed()
         .setColor(`DARK_BLUE`)
         .setDescription(`**ID:** ${playerId}
-                          **Steam:** ${hasPriority.steam}
-                          **Prioridade:** ${hasPriority.priority}
-                          **Status:** Prioridade removida com sucesso`)
+                        **Steam:** ${hasPriority.steam}
+                        **Prioridade:** ${hasPriority.priority}
+                        **Status:** Prioridade removida com sucesso`)
 
       await this.client.db.vrp_priority.delete({ where: { user_id: playerId } })
       return await interaction.reply({ embeds: [embed] })
@@ -139,9 +139,9 @@ export default class Priority extends Command {
         const embed = new MessageEmbed()
           .setColor(`DARK_BLUE`)
           .setDescription(`**ID:** ${playerId}
-                          **Status:** Não existe no banco de dados`)
+                          **Status:** Este player não tem prioridade na fila`)
 
-        return await interaction.reply({ embeds: [embed] })
+        return await interaction.reply({ embeds: [embed], ephemeral: true })
       }
 
       const embed = new MessageEmbed()

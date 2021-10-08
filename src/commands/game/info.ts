@@ -43,7 +43,7 @@ export default class Info extends Command {
         .setDescription(`**ID:** ${playerId}
                         **Status:** Não existe no banco de dados`)
 
-      return await interaction.reply({ embeds: [embed] })
+      return await interaction.reply({ embeds: [embed], ephemeral: true })
     }
 
     const identifiers = await this.getIdentifiers(playerId)

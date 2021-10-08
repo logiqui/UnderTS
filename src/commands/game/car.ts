@@ -91,66 +91,63 @@ export default class Car extends Command {
         .setDescription(`**ID:** ${playerId}
                         **Status:** Não existe no banco de dados`)
 
+      return await interaction.reply({ embeds: [embed], ephemeral: true })
+    }
+
+    if (interaction.options.getSubcommand(true) === 'add') {
+      await this.client.db.vrp_user_vehicles.create({
+        data: {
+          user_id: playerId,
+          vehicle: vehicle!,
+          detido: 0,
+          time: '0',
+          engine: 1000,
+          body: 1000,
+          fuel: 100,
+          ipva: new Date().getTime().toString().slice(0, 10)
+        }
+      })
+
+      const vehList = await this.getVehicles(playerId)
+      const embed = new MessageEmbed()
+        .setColor(`DARK_BLUE`)
+        .setDescription(`**ID:** ${playerId}
+                        **Veiculo Adicionado:** ${vehicle}
+                        **Veiculos Atuais:** ${vehList.join(', ')}
+                        **Status:** Adicionado com sucesso`)
+
       return await interaction.reply({ embeds: [embed] })
     }
 
-    const user = await this.client.db.vrp_user_moneys.findUnique({ where: { user_id: playerId } })
-    if (user) {
-      if (interaction.options.getSubcommand(true) === 'add') {
-        await this.client.db.vrp_user_vehicles.create({
-          data: {
+    if (interaction.options.getSubcommand(true) === 'remove') {
+      await this.client.db.vrp_user_vehicles.delete({
+        where: {
+          user_id_vehicle: {
             user_id: playerId,
-            vehicle: vehicle!,
-            detido: 0,
-            time: '0',
-            engine: 1000,
-            body: 1000,
-            fuel: 100,
-            ipva: new Date().getTime().toString().slice(0, 10)
+            vehicle: vehicle!
           }
-        })
+        }
+      })
 
-        const vehList = await this.getVehicles(playerId)
-        const embed = new MessageEmbed()
-          .setColor(`DARK_BLUE`)
-          .setDescription(`**ID:** ${playerId}
-                          **Veiculo Adicionado:** ${vehicle}
-                          **Veiculos Atuais:** ${vehList.join(', ')}
-                          **Status:** Adicionado com sucesso`)
+      const vehList = await this.getVehicles(playerId)
+      const embed = new MessageEmbed()
+        .setColor(`DARK_BLUE`)
+        .setDescription(`**ID:** ${playerId}
+                        **Veiculo Removido** ${vehicle}
+                        **Veiculos Atuais:** ${vehList.join(', ')}
+                        **Status:** Deletado com sucesso`)
 
-        return await interaction.reply({ embeds: [embed] })
-      }
+      return await interaction.reply({ embeds: [embed] })
+    }
 
-      if (interaction.options.getSubcommand(true) === 'remove') {
-        await this.client.db.vrp_user_vehicles.delete({
-          where: {
-            user_id_vehicle: {
-              user_id: playerId,
-              vehicle: vehicle!
-            }
-          }
-        })
+    if (interaction.options.getSubcommand(true) === 'get') {
+      const vehList = await this.getVehicles(playerId)
+      const embed = new MessageEmbed()
+        .setColor(`DARK_BLUE`)
+        .setDescription(`**ID:** ${playerId}
+                        **Veiculos:** ${vehList.join(`, `)}`)
 
-        const vehList = await this.getVehicles(playerId)
-        const embed = new MessageEmbed()
-          .setColor(`DARK_BLUE`)
-          .setDescription(`**ID:** ${playerId}
-                          **Veiculo Removido** ${vehicle}
-                          **Veiculos Atuais:** ${vehList.join(', ')}
-                          **Status:** Deletado com sucesso`)
-
-        return await interaction.reply({ embeds: [embed] })
-      }
-
-      if (interaction.options.getSubcommand(true) === 'get') {
-        const vehList = await this.getVehicles(playerId)
-        const embed = new MessageEmbed()
-          .setColor(`DARK_BLUE`)
-          .setDescription(`**ID:** ${playerId}
-                          **Veiculos:** ${vehList.join(`, `)}`)
-
-        return await interaction.reply({ embeds: [embed] })
-      }
+      return await interaction.reply({ embeds: [embed] })
     }
   }
 }

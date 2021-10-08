@@ -77,7 +77,7 @@ export default class Money extends Command {
         .setDescription(`**ID:** ${playerId}
                         **Status:** Não existe no banco de dados`)
 
-      return await interaction.reply({ embeds: [embed] })
+      return await interaction.reply({ embeds: [embed], ephemeral: true })
     }
 
     const user = await this.client.db.vrp_user_moneys.findUnique({ where: { user_id: playerId } })
