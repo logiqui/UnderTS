@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && node dist/index.js",
-    "dev": "tsc && tsnd --respawn --transpile-only index.ts",
+    "dev": "tsc-watch -p ./tsconfig.json --onSuccess \"npm run start\"",
     "db": "prisma generate"
   },
   "keywords": [],
@@ -20,9 +20,8 @@
     "moment": "^2.29.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.13",
     "prisma": "^3.2.1",
-    "ts-node-dev": "^1.1.8"
+    "tsc-watch": "^4.5.0"
   },
   "prisma": {
     "schema": "src/structures/prisma/schema.prisma"
