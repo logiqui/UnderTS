@@ -16,14 +16,10 @@ export default class InteractionCreate extends Event {
       const command = this.client.commands.get(interaction.commandName)
       const member = await interaction.guild?.members.fetch(interaction.user.id)
 
-      if (!interaction.inGuild) return
+      if (!interaction.inGuild()) return
 
-      if (command?.roles) {
-        const hasRole = command.roles.some(role => member?.roles.cache.has(role))
-
-        if (!hasRole) {
-          return await this.client.utils.quickError(interaction, `Você não tem permissão para executar este comando.`)
-        }
+      if (command?.roles && !command.roles.some(role => member?.roles.cache.has(role))) {
+        return await this.client.utils.quickError(interaction, `Você não tem permissão para executar este comando.`)
       }
 
       if (command?.perms && !member?.permissions.has(command.perms, true)) {
