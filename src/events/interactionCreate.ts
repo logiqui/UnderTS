@@ -22,7 +22,7 @@ export default class InteractionCreate extends Event {
         const hasRole = command.roles.some(role => member?.roles.cache.has(role))
 
         if (!hasRole) {
-          return await this.client.utils.quickError(interaction, `Você não tem permissao para executar este comando.`)
+          return await this.client.utils.quickError(interaction, `Você não tem permissão para executar este comando.`)
         }
       }
 
