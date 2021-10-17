@@ -1,7 +1,7 @@
 import { Client, ClientEvents } from 'discord.js';
 import Under from '../Under';
 
-declare interface EventOptions {
+type EventOptions = {
   name: keyof ClientEvents
 }
 

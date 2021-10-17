@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionData, ApplicationCommandPermissionData, CommandInteraction, PermissionString } from 'discord.js';
 import Under from '../Under';
 
-declare interface CommandOptions {
+type CommandOptions = {
   name: string
   description: string,
   options?: ApplicationCommandOptionData[]
