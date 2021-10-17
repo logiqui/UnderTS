@@ -21,9 +21,9 @@ export default class Under extends Client {
 
     this.commands = new Collection()
     this.events = new Collection()
-    this.config = Config
     this.utils = new Utils()
     this.db = new PrismaClient()
+    this.config = Config
 
     this.loadCommands()
     this.loadEvents()
@@ -62,7 +62,7 @@ export default class Under extends Client {
   }
 
   init(token?: string) {
-    super.login(this.config.token || token)
+    super.login(process.env.TOKEN || token)
     return this
   }
 }

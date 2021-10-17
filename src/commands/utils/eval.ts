@@ -52,7 +52,7 @@ function clean(client: Under, text: string) {
     text = text
       .replace(/`/g, `\`${String.fromCharCode(8203)}`)
       .replace(/@/g, `@${String.fromCharCode(8203)}`)
-      .replace(new RegExp(client.config.token, 'gi'), '****')
+      .replace(new RegExp('aa', 'gi'), '****')
   }
 
   return text
