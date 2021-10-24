@@ -21,6 +21,7 @@
     "moment": "^2.29.1"
   },
   "devDependencies": {
+    "@types/node": "^16.11.2",
     "dotenv": "^10.0.0",
     "eslint": "^8.0.1",
     "prisma": "^3.2.1",
