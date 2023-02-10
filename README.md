@@ -1,3 +1,3 @@
 # UnderTS
 
-discord v13 with slash commands and typescript
+discord bot i made for a gta server
